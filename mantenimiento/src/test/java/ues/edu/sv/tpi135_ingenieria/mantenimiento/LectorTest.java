@@ -5,6 +5,8 @@
  */
 package ues.edu.sv.tpi135_ingenieria.mantenimiento;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -77,6 +79,23 @@ public class LectorTest {
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         //fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of obtenerArchivos method, of class Lector.
+     */
+    @Test
+    public void testObtenerArchivos() {
+        System.out.println("obtenerArchivos");
+        String path = "src/recursos/";
+        Lector instance = new Lector();
+        List<String> expResult = new ArrayList<String>();
+        expResult.add("src/recursos/texto_prueba.csv");
+        expResult.add("src/recursos/texto.csv");
+        List<String> result = instance.obtenerArchivos(path);
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+      //  fail("The test case is a prototype.");
     }
     
 }

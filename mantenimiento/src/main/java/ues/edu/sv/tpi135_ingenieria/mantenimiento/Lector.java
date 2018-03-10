@@ -5,31 +5,59 @@
  */
 package ues.edu.sv.tpi135_ingenieria.mantenimiento;
 
-
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  *
  * @author kevin
  */
-public class Lector {
+public class Lector implements Serializable {
 
     public boolean verificarPath(final String path) {
 
-        if (path != null && path.trim().isEmpty() == false) {
+        if (path != null && path.trim().isEmpty() == false) { // si el path no es nulo y tampoco esta vacio retorna true
             return Paths.get(path).toFile().exists();
         }
 
         return false;
     }
 
-  // esto es una prueba
+    public List<String> obtenerArchivos(final String path) {
+        List<String> listaDeArchivos = null;
+
+        try (Stream<Path> paths = Files.walk(Paths.get(path))) { // devuelve una coleccion de las rutas de los archivo .csv
+            listaDeArchivos = paths.map(a -> {
+                if (Files.isRegularFile(a) && a.toString().endsWith(".csv")) {
+                    return a.toString();
+                } else {
+                    return "";
+                }
+            }).collect(Collectors.toList());
+            
+             listaDeArchivos.remove("");
+            for(String url : listaDeArchivos){
+            System.out.println(url); 
+            }
+         
+        } catch (IOException ex) {
+            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+     
+        return listaDeArchivos;
+    }
 
     public void leerArchivo(String direccion) {
 
