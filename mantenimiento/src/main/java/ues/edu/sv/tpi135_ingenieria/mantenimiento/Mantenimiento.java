@@ -14,7 +14,8 @@ public class Mantenimiento {
     //Todo lo saque de los pdf del aula virtual :v
     private int id_mantenimiento;
     private int id_responsable;
-    private String historico; //No se a que se refiere exactamente con el historico 
+    private String historico; //No se a que se refiere exactamente con el historico
+                              //Pero lo pongo de todos modos 
     private String numero_inventario;
     private String numero_serie;
     private String marca;

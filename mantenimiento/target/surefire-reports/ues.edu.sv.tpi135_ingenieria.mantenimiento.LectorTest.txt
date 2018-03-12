@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.332 sec <<< FAILURE! - in ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest
-testObtenerArchivos(ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest)  Time elapsed: 0.187 sec  <<< FAILURE!
-java.lang.AssertionError: expected:<[src/recursos/texto_prueba.csv, src/recursos/texto.csv]> but was:<[, src/recursos/texto_prueba.csv, src/recursos/texto.csv]>
-	at ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest.testObtenerArchivos(LectorTest.java:96)
+Tests run: 5, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 0.73 sec <<< FAILURE! - in ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest
+testObtenerArchivos(ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest)  Time elapsed: 0.337 sec  <<< FAILURE!
+junit.framework.AssertionFailedError: expected:<[/tmp/junit1517107296112286962/archivo1.csv, /tmp/junit1517107296112286962/archivo2.csv]> but was:<[/tmp/junit1517107296112286962/archivo2.csv, /tmp/junit1517107296112286962/archivo1.csv, ]>
+	at ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest.testObtenerArchivos(LectorTest.java:124)
 
