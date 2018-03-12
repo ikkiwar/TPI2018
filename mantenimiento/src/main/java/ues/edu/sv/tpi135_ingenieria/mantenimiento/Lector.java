@@ -33,29 +33,36 @@ public class Lector implements Serializable {
 
         return false;
     }
+    
+    
 
     public List<String> obtenerArchivos(final String path) {
-        List<String> listaDeArchivos = null;
+        List<String> listaDeArchivos = new ArrayList();
 
-        try (Stream<Path> paths = Files.walk(Paths.get(path))) { // devuelve una coleccion de las rutas de los archivo .csv
+        /* try (Stream<Path> paths = Files.walk(Paths.get(path))) { // devuelve una coleccion de las rutas de los archivo .csv
             listaDeArchivos = paths.map(a -> {
-                if (Files.isRegularFile(a) && a.toString().endsWith(".csv")) {
-                    return a.toString();
-                } else {
-                    return "";
-                }
+            if (Files.isRegularFile(a) && a.toString().endsWith(".csv")) {
+            return a.toString();
+            } else {
+            return "";
+            }
             }).collect(Collectors.toList());
             
-             listaDeArchivos.remove("");
+            listaDeArchivos.remove("");
             for(String url : listaDeArchivos){
             System.out.println(url); 
             }
          
+            } catch (IOException ex) {
+            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+         */
+        try {
+            Files.walk(Paths.get(path)).filter(a -> a.toFile().getName().endsWith(".csv"))
+                    .forEach(f -> listaDeArchivos.add(f.toUri().getPath()));
         } catch (IOException ex) {
             Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-     
+
         return listaDeArchivos;
     }
 
