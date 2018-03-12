@@ -1,20 +1,25 @@
 package ues.edu.sv.tpi135_ingenieria.mantenimiento.servicioREST;
 
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import javax.ws.rs.core.Application;
+import org.glassfish.jersey.server.ResourceConfig;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.glassfish.jersey.test.TestProperties;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
 
 /**
  *
  * @author esperanza
  */
-public class MantenimientoServicioRESTTest {
+public class MantenimientoServicioRESTTest{
     
-    public MantenimientoServicioRESTTest() {
-    }
     
     @BeforeClass
     public static void setUpClass() {
@@ -31,5 +36,17 @@ public class MantenimientoServicioRESTTest {
     @After
     public void tearDown() {
     }
-    //http://www.springboottutorial.com/unit-testing-for-spring-boot-rest-services
+    
+    @Test
+    public void setMantenimientosTest(){
+        System.out.println("Prueba post mantenimientos");
+        List<String> mtn = new ArrayList<>();
+        mtn.add("id_mantenimiento");
+        mtn.add("Toshiba");
+        
+        MantenimientoServicioREST instance = new MantenimientoServicioREST();
+        URI expResult = null;
+        URI result = instance.postMantenimiento(mtn);
+        assertEquals(expResult, result);
+    }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest" time="0.73" tests="5" errors="0" skipped="0" failures="1">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest" time="0.626" tests="5" errors="1" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/usr/lib/jvm/jdk1.8.0_162/jre/lib/amd64"/>
@@ -59,18 +59,15 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase name="testSeparador" classname="ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest" time="0.079"/>
-  <testcase name="testVerificarPathDirectorio" classname="ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest" time="0.011"/>
-  <testcase name="testVerificarPath" classname="ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest" time="0.007"/>
-  <testcase name="testLeerArchivo" classname="ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest" time="0.006"/>
-  <testcase name="testObtenerArchivos" classname="ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest" time="0.337">
-    <failure message="expected:&lt;[/tmp/junit1517107296112286962/archivo1.csv, /tmp/junit1517107296112286962/archivo2.csv]&gt; but was:&lt;[/tmp/junit1517107296112286962/archivo2.csv, /tmp/junit1517107296112286962/archivo1.csv, ]&gt;" type="junit.framework.AssertionFailedError"><![CDATA[junit.framework.AssertionFailedError: expected:<[/tmp/junit1517107296112286962/archivo1.csv, /tmp/junit1517107296112286962/archivo2.csv]> but was:<[/tmp/junit1517107296112286962/archivo2.csv, /tmp/junit1517107296112286962/archivo1.csv, ]>
-	at ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest.testObtenerArchivos(LectorTest.java:124)
-]]></failure>
+  <testcase name="testSeparador" classname="ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest" time="0.04"/>
+  <testcase name="testVerificarPathDirectorio" classname="ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest" time="0.013"/>
+  <testcase name="testVerificarPath" classname="ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest" time="0.005"/>
+  <testcase name="testLeerArchivo" classname="ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest" time="0.007"/>
+  <testcase name="testObtenerArchivos" classname="ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest" time="0.379">
+    <error type="java.lang.NullPointerException">java.lang.NullPointerException
+	at ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest.testObtenerArchivos(LectorTest.java:123)
+</error>
     <system-out><![CDATA[obtenerArchivos
-/tmp/junit1517107296112286962/archivo2.csv
-/tmp/junit1517107296112286962/archivo1.csv
-
 ]]></system-out>
   </testcase>
 </testsuite>
