@@ -5,4 +5,3 @@ Tests run: 5, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.626 sec <<< FA
 testObtenerArchivos(ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest)  Time elapsed: 0.379 sec  <<< ERROR!
 java.lang.NullPointerException
 	at ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest.testObtenerArchivos(LectorTest.java:123)
-

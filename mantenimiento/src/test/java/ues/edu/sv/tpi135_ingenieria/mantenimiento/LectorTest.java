@@ -24,22 +24,38 @@ import org.junit.rules.TemporaryFolder;
  * @author kevin
  */
 public class LectorTest {
-    
+
+    @Rule
+    public TemporaryFolder dirPrueba = new TemporaryFolder();
+
+    @Test
+    public void crearArchivosTemp() throws IOException {
+        String path;
+        File tempFile = dirPrueba.newFile("prueba.csv");
+        File tempFolder = dirPrueba.newFolder("Folder_prueba");
+        
+        System.out.println(tempFile);
+        System.out.println("Url Folder de prueba" + dirPrueba.getRoot().toString());
+     
+
+
+    }
+
     public LectorTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -54,7 +70,7 @@ public class LectorTest {
         Lector instance = new Lector();
         instance.leerArchivo("src/recursos/texto_prueba.csv");
         // TODO review the generated test code and remove the default call to fail.
-     
+
     }
 
     /**
@@ -70,7 +86,7 @@ public class LectorTest {
         String[] result = null;
         assertArrayEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
-      
+
     }
        
     /**
@@ -123,5 +139,4 @@ public class LectorTest {
         List<String> result = instance.obtenerArchivos(path);
         assertEquals(expResult, result);
     }
-    
-}
+
