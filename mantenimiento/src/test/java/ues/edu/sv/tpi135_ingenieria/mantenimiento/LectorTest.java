@@ -5,14 +5,19 @@
  */
 package ues.edu.sv.tpi135_ingenieria.mantenimiento;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.rules.TemporaryFolder;
 
 /**
  *
@@ -42,6 +47,7 @@ public class LectorTest {
     /**
      * Test of leerArchivo method, of class Lector.
      */
+    
     @Test
     public void testLeerArchivo() {
         System.out.println("leerArchivo");
@@ -54,6 +60,7 @@ public class LectorTest {
     /**
      * Test of separador method, of class Lector.
      */
+    
     @Test
     public void testSeparador() {
         System.out.println("separador");
@@ -65,37 +72,56 @@ public class LectorTest {
         // TODO review the generated test code and remove the default call to fail.
       
     }
-
+       
     /**
      * Test of verificarPath method, of class Lector.
      */
+    //https://junit.org/junit4/javadoc/4.12/org/junit/rules/TemporaryFolder.html 
+    //De aqui saque lo de temporary Folder
+    @Rule
+    public TemporaryFolder carpeta = new TemporaryFolder();
+    
     @Test
-    public void testVerificarPath() {
+    public void testVerificarPath() throws IOException {
         System.out.println("verificarPath");
-        String path = "src/recursos/texto_prueba.csv";
+        File archivoTemp = carpeta.newFile("arhivoTemp.cvs");
+        String path = archivoTemp.getPath();
         Lector instance = new Lector();
         boolean expResult = true;
         boolean result = instance.verificarPath(path);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
     }
+    
+    @Test
+    public void testVerificarPathDirectorio(){
+        System.out.println("Verificar Directorio");
+        String path = carpeta.getRoot().getPath();
+        Lector instance = new Lector();
+        boolean expResult = true;
+        boolean result = instance.verificarPathDirectorio(path);
+        assertEquals(expResult, result);
+    }
+    
 
     /**
      * Test of obtenerArchivos method, of class Lector.
      */
+    
+    //Marca error de orden de devolucion de archivos
     @Test
-    public void testObtenerArchivos() {
+    public void testObtenerArchivos() throws IOException {
         System.out.println("obtenerArchivos");
-        String path = "src/recursos/";
+        File archivo1 = carpeta.newFile("archivo1.csv");
+        File archivo2 = carpeta.newFile("archivo2.csv");
+        File carpeta2 = carpeta.newFolder("recursos");
+        String path = carpeta.getRoot().getPath();
         Lector instance = new Lector();
-        List<String> expResult = new ArrayList<String>();
-        expResult.add("src/recursos/texto_prueba.csv");
-        expResult.add("src/recursos/texto.csv");
+        //Bendito sea stackoverflow :v
+        List<File> expResult = new ArrayList<>();
+        expResult.add(archivo1);
+        expResult.add(archivo2);
         List<String> result = instance.obtenerArchivos(path);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-      //  fail("The test case is a prototype.");
     }
     
 }
