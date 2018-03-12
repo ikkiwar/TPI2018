@@ -5,18 +5,15 @@
  */
 package ues.edu.sv.tpi135_ingenieria.mantenimiento;
 
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
@@ -25,79 +22,60 @@ import java.util.stream.Stream;
  */
 public class Lector implements Serializable {
 
-    public boolean verificarPath(final String path) {
-
-        if (path != null && path.trim().isEmpty() == false) { // si el path no es nulo y tampoco esta vacio retorna true
-            return Paths.get(path).toFile().exists();
+     public boolean verificarArchivo(final String path){
+        if(path != null && !path.trim().isEmpty()){
+            //Verifica que el path sea un archivo, tenga permisos de lectura y que no sea oculto
+            return (Paths.get(path).toFile().isFile() && Paths.get(path).toFile().canRead() && !Paths.get(path).toFile().isHidden());
         }
-
+        
         return false;
     }
     
+    public boolean verificarDirectorio(final String path){
+        if(path != null && !path.trim().isEmpty()){
+            //Verifica que el path sea un directorio, tenga permisos de lectura y que no sea oculto
+            return (Paths.get(path).toFile().isDirectory() && Paths.get(path).toFile().canRead() && !Paths.get(path).toFile().isHidden());
+        }
+        return false;
+    }
     
-
-    public List<String> obtenerArchivos(final String path) {
-        List<String> listaDeArchivos = new ArrayList();
-
-        /* try (Stream<Path> paths = Files.walk(Paths.get(path))) { // devuelve una coleccion de las rutas de los archivo .csv
-            listaDeArchivos = paths.map(a -> {
-            if (Files.isRegularFile(a) && a.toString().endsWith(".csv")) {
-            return a.toString();
-            } else {
-            return "";
-            }
-            }).collect(Collectors.toList());
+    public List<String> obtenerArchivos(final String path){
+        List<String> listaArchivos = new ArrayList<>();
+        if(verificarArchivo(path)){
+            listaArchivos.add(path);
+        }else if(verificarDirectorio(path)){
+            try {
             
-            listaDeArchivos.remove("");
-            for(String url : listaDeArchivos){
-            System.out.println(url); 
-            }
-         
+            Files.walk(Paths.get(path)).filter(a -> a.toFile().getName().endsWith(".csv")).forEach(p -> listaArchivos.add(p.toString()));
+            listaArchivos.forEach(System.out::println);
+   
             } catch (IOException ex) {
-            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
-         */
-        try {
-            Files.walk(Paths.get(path)).filter(a -> a.toFile().getName().endsWith(".csv"))
-                    .forEach(f -> listaDeArchivos.add(f.toUri().getPath()));
-        } catch (IOException ex) {
-            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return listaDeArchivos;
-    }
-
-    public void leerArchivo(String direccion) {
-
-        try {
-            String linea = "";
-            FileReader lector = new FileReader(direccion); // lector del archivo 
-            int contador = lector.read();  // devuelve el caracter leido o -1 si termina la secuencia
-
-            while (contador > -1) { // lee linea por linea
-
-                char letra = (char) contador; // volvemos por un momento contador en char para tomar su valor 
-                linea += letra;       // se concatenan cada letra
-                contador = lector.read();
+                Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-            separador(linea);
-
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, "archivo no encontrado", ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        return listaArchivos;
+        
     }
-
-    public String[] separador(String linea) {
-        String objetos[] = linea.split(","); // aqui se separa 
-
-        for (String separado : objetos) { // imprime cada objeto en el array
-
-            System.out.println(separado);
-        }
-
-        return objetos;
+    
+    public void leerArchivo(List<String> listaArchivos){
+        List<List> cadena = new ArrayList(); //aqui se almacenan los objetos separados por comas de cada linea que contenga el archivo
+        listaArchivos.forEach(l -> {
+            try {
+                Stream<String> stream = Files.lines(Paths.get(l)).skip(1); //se obtiene el flujo de datos y se realiza un salto de linea
+                stream.forEach(a -> cadena.add(separador(a)));
+            } catch (IOException ex) {
+                Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        cadena.forEach(a -> a.forEach(System.out::println));
+    }
+    
+    public List<String> separador(String linea){
+        String[] separado = linea.split(","); // separa la linea por comas
+        List<String> listaSeparado = new ArrayList<>(Arrays.asList(separado));  //se convierte a una lista 
+        
+        return listaSeparado; 
     }
 
 }
