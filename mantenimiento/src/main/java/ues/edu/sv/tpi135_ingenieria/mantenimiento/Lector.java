@@ -24,6 +24,12 @@ import java.util.stream.Stream;
  * @author kevin
  */
 public class Lector implements Serializable {
+    
+    private static Lector instancia = new Lector();
+    
+    public static Lector getInstance(){
+        return instancia;
+    }
 
     public boolean verificarPath(final String path) {
 
