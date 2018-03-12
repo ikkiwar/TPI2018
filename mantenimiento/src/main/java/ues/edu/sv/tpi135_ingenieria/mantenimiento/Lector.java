@@ -5,6 +5,7 @@
  */
 package ues.edu.sv.tpi135_ingenieria.mantenimiento;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,7 +26,7 @@ import java.util.stream.Stream;
  */
 public class Lector implements Serializable {
     
-    private static Lector instancia = new Lector();
+    private static final Lector instancia = new Lector();
     
     public static Lector getInstance(){
         return instancia;
@@ -34,9 +35,19 @@ public class Lector implements Serializable {
     public boolean verificarPath(final String path) {
 
         if (path != null && path.trim().isEmpty() == false) { // si el path no es nulo y tampoco esta vacio retorna true
-            return Paths.get(path).toFile().exists();
+            File fl = new File(path);
+            //Verifica que el path sea un archivo, tenga permisos de lectura y que no sea oculto
+            return (fl.isFile() && fl.canRead() && !fl.isHidden());
         }
-
+        return false;
+    }
+    
+    public boolean verificarPathDirectorio(final String path){
+        if(path != null && path.trim().isEmpty() == false){
+            File archivo = new File(path);
+            //Verifica que el path sea un directorio, tenga permisos de lectura y que no sea oculto
+            return (archivo.isDirectory() && archivo.canRead() && !archivo.isHidden());
+        }
         return false;
     }
 
