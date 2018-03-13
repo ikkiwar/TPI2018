@@ -9,6 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
 import org.junit.After;
@@ -36,9 +38,6 @@ public class LectorTest {
         
         System.out.println(tempFile);
         System.out.println("Url Folder de prueba" + dirPrueba.getRoot().toString());
-     
-
-
     }
 
     public LectorTest() {
@@ -66,10 +65,19 @@ public class LectorTest {
     
     @Test
     public void testLeerArchivo() {
-        System.out.println("leerArchivo");
-        Lector instance = new Lector();
-        instance.leerArchivo("src/recursos/texto_prueba.csv");
-        // TODO review the generated test code and remove the default call to fail.
+        try {
+            System.out.println("leerArchivo");
+            Lector instance = new Lector();
+            File archivo1 = dirPrueba.newFile("Archivo1.csv");
+            File archivo2 = dirPrueba.newFile("Archivo2.csv");     
+            List<String> archivo = new ArrayList();
+            archivo.add(archivo1.toString());
+            archivo.add(archivo2.toString());
+            instance.leerArchivo(archivo);
+            // TODO review the generated test code and remove the default call to fail.
+        } catch (IOException ex) {
+            Logger.getLogger(LectorTest.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
@@ -104,7 +112,7 @@ public class LectorTest {
         String path = archivoTemp.getPath();
         Lector instance = new Lector();
         boolean expResult = true;
-        boolean result = instance.verificarPath(path);
+        boolean result = instance.verificarArchivo(path);
         assertEquals(expResult, result);
     }
     
@@ -114,7 +122,7 @@ public class LectorTest {
         String path = carpeta.getRoot().getPath();
         Lector instance = new Lector();
         boolean expResult = true;
-        boolean result = instance.verificarPathDirectorio(path);
+        boolean result = instance.verificarDirectorio(path);
         assertEquals(expResult, result);
     }
     
@@ -124,12 +132,13 @@ public class LectorTest {
      */
     
     //Marca error de orden de devolucion de archivos
+    
     @Test
     public void testObtenerArchivos() throws IOException {
         System.out.println("obtenerArchivos");
         File archivo1 = carpeta.newFile("archivo1.csv");
         File archivo2 = carpeta.newFile("archivo2.csv");
-        File carpeta2 = carpeta.newFolder("recursos");
+        //File carpeta2 = carpeta.newFolder("recursos");
         String path = carpeta.getRoot().getPath();
         Lector instance = new Lector();
         //Bendito sea stackoverflow :v
@@ -139,4 +148,4 @@ public class LectorTest {
         List<String> result = instance.obtenerArchivos(path);
         assertEquals(expResult, result);
     }
-
+}
