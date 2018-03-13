@@ -4,12 +4,16 @@ import java.net.URI;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.json.Json;
+import javax.json.JsonObject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
@@ -21,46 +25,30 @@ import ues.edu.sv.tpi135_ingenieria.mantenimiento.Lector;
  *
  * @author esperanza
  */
-@Path("/mantenimiento")
+//@Path("/mantenimiento")
 public class MantenimientoServicioREST {
-   
-    private Lector dataService = Lector.getInstance();
-    private String path; 
-    WebTarget wt;
-    
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<String> getMantenimientos(){ 
-        return dataService.obtenerArchivos(path);
+   Client cliente;
+    WebTarget raiz;
+    private final static String URL_RESOURCE = "http://localhost:8080/mantenimiento";
+    public MantenimientoServicioREST(){
+        this.cliente = ClientBuilder.newClient();
+        this.raiz = cliente.target(URL_RESOURCE);
     }
-    
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
-    public URI postMantenimiento(List<String> mantenimiento){
-        if(mantenimiento != null && !mantenimiento.isEmpty()){
-            JSONArray jsonMantenimiento = new JSONArray();
-            for(String mtn : mantenimiento){
-                try {             
-                    jsonMantenimiento.put(new JSONArray(mtn));
-                    Response res = wt.path("mantenimiento").request(MediaType.APPLICATION_JSON).
-                    accept(MediaType.APPLICATION_JSON).post(Entity.json(jsonMantenimiento));
-                    if(res.getStatus() == Response.Status.CREATED.getStatusCode() && res != null){
-                        return res.getLocation();
-                    }   
-                } catch (JSONException ex) {
-                    Logger.getLogger(MantenimientoServicioREST.class.getName()).log(Level.SEVERE, null, ex);
-                }
+
+    public URI crearMantenimiento(List<List<String>> lista) throws JSONException{
+        //JSONArray jsonMantenimiento = new JSONArray();
+        for (List<String> list : lista) {
+            for (String string : list) {
+                if (lista!=null && string.trim().isEmpty()) {
+                    JsonObject nuevo = Json.createObjectBuilder().add("mantenimiento", string.trim().toUpperCase()).build();         
+                    Response respuesta = raiz.path("mantenimientoraw").request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(Entity.json(nuevo));
+                    if (respuesta!= null && respuesta.getStatus()==Response.Status.CREATED.getStatusCode()) {
+                        return respuesta.getLocation();
+                    }
+                }  
             }
         }
-        return null;
+        
+    return null;
     }
-    
-    @GET
-    @Path("{id_mantenimiento}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<String> getIdMantenimiento(@PathParam("id_mantenimiento") String id_mantenimiento) {
-        return dataService.obtenerArchivos("{id}");
-    }
-    
 }

@@ -53,18 +53,15 @@ public class Lector implements Serializable {
         if(verificarArchivo(path)){
             listaArchivos.add(path);
         }else if(verificarDirectorio(path)){
-            try {
-            
+            try {           
             Files.walk(Paths.get(path)).filter(a -> a.toFile().getName().endsWith(".csv")).forEach(p -> listaArchivos.add(p.toString()));
             listaArchivos.forEach(System.out::println);
    
             } catch (IOException ex) {
                 Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        
+        }      
         return listaArchivos;
-        
     }
     
     public void leerArchivo(List<String> listaArchivos){
@@ -85,6 +82,22 @@ public class Lector implements Serializable {
         List<String> listaSeparado = new ArrayList<>(Arrays.asList(separado));  //se convierte a una lista 
         
         return listaSeparado; 
+    }
+    
+    public List<List<String>> parser(final String path, final boolean saltarLinea, final String separador) throws IOException{
+        List<List<String>> listado=new ArrayList<>();  //Algo asi como que una lista multidimensional     
+        if (verificarArchivo(path)) { //llamamos al metodo validar que creamos
+            try (Stream<String> lines = Files.lines(Paths.get(path))) {
+            lines.skip(saltarLinea?1:0).filter(l->l.contains(separador)).
+                    forEach(s -> {
+                String[] separado = s.split(separador);   
+                listado.add(Arrays.asList(separado));
+                    });
+            return listado;
+            }
+        }
+        
+        return null;
     }
 
 }
