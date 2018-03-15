@@ -30,8 +30,31 @@ public class LectorTest {
     @Rule
     public TemporaryFolder carpetaTemp = new TemporaryFolder();
 
-    @Test
+    @Before
     public void crearArchivosTemp() throws IOException {
+        String texto = "id_mantenimiento,historico,n_inventario,marca,n_serie,modelo"
+                + ",responsable,sistema_operativo,version,observaciones\n"
+                + "1,HP1,12040.3334.080.0017,Lenovo,MJVZLKF,ThinkCentre M82"
+                + ",Lic Rina de Zometa,Windows,7.0 Professional SP 64 bits,office pirata \n"
+                + "2,HP2,12040.3334.080.0008,Dell,551LHY,Vostron 220,Lic Rina de Zometa"
+                + ",Windows,7.0 Professional SP 64 bits,Office Original";
+
+        String texto2 = "id_mantenimiento,historico,n_inventario,marca,n_serie,modelo"
+                + ",responsble,sistema_operativo,version,observaciones\n "
+                + "1,HP2,12040.3334.080.0008,Dell,551LHY,Vostron 220,Lic Rina de Zometa"
+                + ",Windows,7.0 Professional SP 64 bits,Office Original";
+
+        File tempfile = carpetaTemp.newFile("prueba.csv");
+        File tempfile2 = carpetaTemp.newFile("prueba2.csv");
+
+        try (FileWriter fw = new FileWriter(tempfile.getAbsolutePath());
+                PrintWriter pw = new PrintWriter(fw)) {
+            pw.println(texto);
+        }
+        try (FileWriter fw = new FileWriter(tempfile2.getAbsolutePath());
+                PrintWriter pw = new PrintWriter(fw)) {
+            pw.println(texto2);
+        }
 
     }
 
@@ -55,22 +78,13 @@ public class LectorTest {
     }
 
     /**
-     * Test of getInstance method, of class Lector.
-     *
-     * @Test public void testGetInstance() { System.out.println("getInstance");
-     * Lector expResult = null; Lector result = Lector.getInstance();
-     * assertEquals(expResult, result); // TODO review the generated test code
-     * and remove the default call to fail. // fail("The test case is a
-     * prototype."); }
-     *
-     * /**
      * Test of verificarArchivo method, of class Lector.
      */
     @Test
     public void testVerificarArchivo() throws IOException {
         System.out.println("verificarArchivo");
-        File archivoTemp = carpetaTemp.newFile("arhivoTemp.cvs");
-        String path = archivoTemp.getPath();
+        
+        String path = carpetaTemp.getRoot().toString()+"/prueba.csv";
         Lector instance = new Lector();
         boolean expResult = true;
         boolean result = instance.verificarArchivo(path);
@@ -100,15 +114,12 @@ public class LectorTest {
     @Test
     public void testObtenerArchivos() throws IOException {
         System.out.println("obtenerArchivos");
-        File archivo1 = carpetaTemp.newFile("archivo1.csv");
-        File archivo2 = carpetaTemp.newFile("archivo2.csv");
-        //File carpeta2 = carpeta.newFolder("recursos");
+
         String path = carpetaTemp.getRoot().getPath();
         Lector instance = new Lector();
-        //Bendito sea stackoverflow :v
         List<String> expResult = new ArrayList<>();
-        expResult.add(archivo1.getCanonicalPath());
-        expResult.add(archivo2.getCanonicalPath());
+        expResult.add(path + "/prueba.csv");
+        expResult.add(path + "/prueba2.csv");
         List<String> result = instance.obtenerArchivos(path);
         assertEquals(expResult, result);
     }
@@ -119,43 +130,31 @@ public class LectorTest {
     @Test
     public void testParser() throws Exception {
         System.out.println("Parser");
-        String texto = "id_mantenimiento,historico,n_inventario,marca,n_serie,modelo"
-                + ",responsable,sistema_operativo,version,observaciones\n"
-                + "1,HP1,12040.3334.080.0017,Lenovo,MJVZLKF,ThinkCentre M82"
-                + ",Lic Rina de Zometa,Windows,7.0 Professional SP 64 bits,office pirata";
 
-        String texto2 = "id_mantenimiento,historico,n_inventario,marca,n_serie,modelo"
-                + ",responsble,sistema_operativo,version,observaciones\n "
-                + "2,HP2,12040.3334.080.0008,Dell,551LHY,Vostron 220,Lic Rina de Zometa"
-                + ",Windows,7.0 Professional SP 64 bits,Office Original";
-
-        File tempfile = carpetaTemp.newFile("prueba.csv");
-        File tempfile2 = carpetaTemp.newFile("prueba2.csv");
-
-        try (FileWriter fw = new FileWriter(tempfile.getAbsolutePath());
-                PrintWriter pw = new PrintWriter(fw)) {
-            pw.println(texto);
-        }
-        try (FileWriter fw = new FileWriter(tempfile2.getAbsolutePath());
-                PrintWriter pw = new PrintWriter(fw)) {
-            pw.println(texto2);
-        }
         String paths = carpetaTemp.getRoot().toString();
         boolean saltarLinea = true;
         String separador = ",";
         Lector instance = new Lector();
         List<List<String>> expResult = new ArrayList<>();
         List<String> parse = new ArrayList<>();
-        List<String> parse1 = new ArrayList<>();
-        String[] prueba = {"1", "HP1", "12040.3334.080.0017", "Lenovo", "MJVZLKF",
-             "ThinkCentre M82", "Lic Rina de Zometa","Windows", "7.0 Professional SP 64 bits", "office pirata"};
-        String[] otraPrueba = {"2", "HP2", "12040.3334.080.0008", "Dell", "551LHY",
+        List<String> parse2 = new ArrayList<>();
+        List<String> parse3 = new ArrayList<>();
+
+        String[] lista = {"1", "HP1", "12040.3334.080.0017", "Lenovo", "MJVZLKF",
+            "ThinkCentre M82", "Lic Rina de Zometa", "Windows", "7.0 Professional SP 64 bits", "office pirata"};
+        String[] lista2 = {"2", "HP2", "12040.3334.080.0008", "Dell", "551LHY",
             "Vostron 220", "Lic Rina de Zometa",
-            "Windows","7.0 Professional SP 64 bits", "Office Original"};
-        parse.addAll(Arrays.asList(prueba));
-        parse1.addAll(Arrays.asList(otraPrueba));
+            "Windows", "7.0 Professional SP 64 bits", "Office Original"};
+        String[] Lista3 = {"1", "HP2", "12040.3334.080.0008", "Dell", "551LHY",
+            "Vostron 220", "Lic Rina de Zometa",
+            "Windows", "7.0 Professional SP 64 bits", "Office Original"};
+
+        parse.addAll(Arrays.asList(lista));
+        parse2.addAll(Arrays.asList(lista2));
+        parse3.addAll(Arrays.asList(Lista3));
         expResult.add(0, parse);
-        expResult.add(1, parse1);
+        expResult.add(1, parse2);
+        expResult.add(2, parse3);
         List<String> path = instance.obtenerArchivos(paths);
         List<List<String>> result = instance.parser(path, saltarLinea, separador);
         assertEquals(expResult, result);

@@ -5,15 +5,10 @@
  */
 package ues.edu.sv.tpi135_ingenieria.mantenimiento;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,12 +19,6 @@ import java.util.stream.Stream;
  * @author kevin
  */
 public class Lector {
-
-    private static final Lector instancia = new Lector();
-
-    public static Lector getInstance() {
-        return instancia;
-    }
 
     public boolean verificarArchivo(final String path) {
         if (path != null && !path.trim().isEmpty()) {
@@ -58,7 +47,7 @@ public class Lector {
             try {
                 Files.walk(Paths.get(path)).filter(a -> a.toFile().getName().endsWith(".csv"))
                         .forEach(p -> listaArchivos.add(p.toString()));
-                
+
                 listaArchivos.forEach(System.out::println);
 
             } catch (IOException ex) {
@@ -69,27 +58,34 @@ public class Lector {
     }
 
     // este metodo Genera una lista con los objetos separados por "," de todos los archivos .csv
-    public List<List<String>> parser(final List<String> paths, final boolean saltarLinea, 
+    public List<List<String>> parser(final List<String> paths, final boolean saltarLinea,
             final String separador) throws IOException {
-        List<List<String>> listado = new ArrayList<>();    
+
+        List<List<String>> listado = new ArrayList<>();
 
         paths.forEach(p -> {
             if (verificarArchivo(p)) {
                 try (Stream<String> lines = Files.lines(Paths.get(p))) {
-                    lines.skip(saltarLinea ? 1 : 0).filter(l -> l.contains(separador)).
-                            forEach(s -> {
+                    lines.skip(saltarLinea ? 1 : 0)
+                            .filter(l -> l.contains(separador))
+                            .forEach(s -> {
                                 String[] separado = s.split(separador);
                                 List<String> lista = new ArrayList<>();
                                 for (String string : separado) {
                                     lista.add(string.trim());
                                 }
                                 listado.add(lista);
+
                             });
                 } catch (IOException ex) {
                     Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
+
+        for (List e : listado) {
+            System.out.println(e);
+        }
 
         return listado;
     }
