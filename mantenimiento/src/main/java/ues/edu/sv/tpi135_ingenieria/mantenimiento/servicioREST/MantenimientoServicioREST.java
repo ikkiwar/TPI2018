@@ -122,7 +122,9 @@ public class MantenimientoServicioREST {
                     Response respuesta = webtarget.path("responsableRaw").
                             request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).
                             post(Entity.json(nuevoResponsable));
-                    if (respuesta != null && respuesta.getStatus() == Response.Status.CREATED.getStatusCode()) {
+                    if (respuesta != null 
+                            && respuesta.getStatus() 
+                            == Response.Status.CREATED.getStatusCode()) {
                         return respuesta.getLocation();
                     }
                 }
