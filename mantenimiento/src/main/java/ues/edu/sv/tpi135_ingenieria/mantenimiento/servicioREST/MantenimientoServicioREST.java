@@ -1,5 +1,6 @@
 
 package ues.edu.sv.tpi135_ingenieria.mantenimiento.servicioREST;
+
 import java.net.URI;
 import java.util.List;
 import javax.json.Json;
@@ -29,11 +30,16 @@ public class MantenimientoServicioREST {
         for (List<String> list : lista) {
             for (String string : list) {
                 if (lista != null && !string.trim().isEmpty()) {
-                    JsonObject nuevo = Json.createObjectBuilder().add("mantenimiento", string.trim().toUpperCase()).build();         
+                    JsonObject nuevo = Json.createObjectBuilder()
+                            .add("mantenimiento", string.trim().toUpperCase()).build();         
+                    
                     Response respuesta = webtarget.path("mantenimientoRaw").
-                            request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).
-                            post(Entity.json(nuevo));
-                    if (respuesta!= null && respuesta.getStatus() == Response.Status.CREATED.getStatusCode()) {
+                            request(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON)
+                            .post(Entity.json(nuevo));
+                    if (respuesta!= null 
+                            && respuesta.getStatus() 
+                            == Response.Status.CREATED.getStatusCode()) {
                         return respuesta.getLocation();
                     }
                 }  
@@ -46,11 +52,16 @@ public class MantenimientoServicioREST {
         for(List<String> list : listaMarca){
             for(String string : list){
                 if (listaMarca != null && string.trim().isEmpty()) {
-                    JsonObject nuevaMarca = Json.createObjectBuilder().add("marca", string.trim().toUpperCase()).build();
+                    JsonObject nuevaMarca = Json.createObjectBuilder()
+                            .add("marca", string.trim().toUpperCase()).build();
+                    
                     Response respuesta = webtarget.path("marcaRaw").
-                            request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).
+                            request(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON).
                             post(Entity.json(nuevaMarca));
-                    if(respuesta != null && respuesta.getStatus() == Response.Status.CREATED.getStatusCode()) {
+                    if(respuesta != null 
+                            && respuesta.getStatus() 
+                            == Response.Status.CREATED.getStatusCode()) {
                         return respuesta.getLocation();
                     }
                 }
@@ -63,9 +74,15 @@ public class MantenimientoServicioREST {
         for(List<String> list : listaEquipo){
             for(String string : list){
                 if (listaEquipo != null && string.trim().isEmpty()) {
-                    JsonObject nuevoEquipo = Json.createObjectBuilder().add("equipo", string.trim().toUpperCase()).build();
-                    Response respuesta = webtarget.path("equipoRaw").request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).post(Entity.json(nuevoEquipo));
-                    if (respuesta != null && respuesta.getStatus() == Response.Status.CREATED.getStatusCode()) {
+                    JsonObject nuevoEquipo = Json.createObjectBuilder()
+                            .add("equipo", string.trim().toUpperCase()).build();
+                    
+                    Response respuesta = webtarget.path("equipoRaw")
+                            .request(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON).post(Entity.json(nuevoEquipo));
+                    if (respuesta != null 
+                            && respuesta.getStatus() 
+                            == Response.Status.CREATED.getStatusCode()) {
                         return respuesta.getLocation();
                     }
                 }
@@ -78,11 +95,16 @@ public class MantenimientoServicioREST {
         for(List<String> list : listaModelo){
             for(String string : list){
                 if (listaModelo != null && !string.trim().isEmpty()) {
-                    JsonObject nuevoModelo = Json.createObjectBuilder().add("modelo", string.trim().toUpperCase()).build();
+                    JsonObject nuevoModelo = Json.createObjectBuilder()
+                            .add("modelo", string.trim().toUpperCase()).build();
+                    
                     Response respuesta = webtarget.path("modeloRaw").
-                            request(MediaType.APPLICATION_JSON).accept(MediaType.APPLICATION_JSON).
+                            request(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON).
                             post(Entity.json(nuevoModelo));
-                    if (respuesta != null && respuesta.getStatus() == Response.Status.CREATED.getStatusCode()) {
+                    if (respuesta != null 
+                            && respuesta.getStatus() 
+                            == Response.Status.CREATED.getStatusCode()) {
                         return respuesta.getLocation();
                     }
                 }
@@ -113,11 +135,15 @@ public class MantenimientoServicioREST {
         for (List<String> list : listaOS) {
             for(String string : list){
                 if (listaOS != null && string.trim().isEmpty()) {
-                    JsonObject nuevoOS = Json.createObjectBuilder().add("OS", string.trim().toUpperCase()).build();
+                    JsonObject nuevoOS = Json.createObjectBuilder()
+                            .add("OS", string.trim().toUpperCase()).build();
+                    
                     Response respuesta = webtarget.path("OSraw").
                             request(MediaType.APPLICATION_JSON).
                             post(Entity.json(Entity.json(nuevoOS)));
-                    if (respuesta != null && respuesta.getStatus() == Response.Status.CREATED.getStatusCode()) {
+                    if (respuesta != null 
+                            && respuesta.getStatus() 
+                            == Response.Status.CREATED.getStatusCode()) {
                         return respuesta.getLocation();
                     }
                 }

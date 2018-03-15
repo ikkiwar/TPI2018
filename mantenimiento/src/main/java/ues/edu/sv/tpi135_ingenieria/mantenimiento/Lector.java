@@ -23,7 +23,8 @@ public class Lector {
     public boolean verificarArchivo(final String path) {
         if (path != null && !path.trim().isEmpty()) {
             //Verifica que el path sea un archivo, tenga permisos de lectura y que no sea oculto
-            return (Paths.get(path).toFile().isFile() && Paths.get(path).toFile().canRead()
+            return (Paths.get(path).toFile().isFile() 
+                    && Paths.get(path).toFile().canRead()
                     && !Paths.get(path).toFile().isHidden());
         }
 
@@ -33,7 +34,8 @@ public class Lector {
     public boolean verificarDirectorio(final String path) {
         if (path != null && !path.trim().isEmpty()) {
             //Verifica que el path sea un directorio, tenga permisos de lectura y que no sea oculto
-            return (Paths.get(path).toFile().isDirectory() && Paths.get(path).toFile().canRead()
+            return (Paths.get(path).toFile().isDirectory() 
+                    && Paths.get(path).toFile().canRead()
                     && !Paths.get(path).toFile().isHidden());
         }
         return false;
@@ -41,17 +43,20 @@ public class Lector {
 
     public List<String> obtenerArchivos(final String path) { // metodo encargado de buscar en el path todos los archivos .csv
         List<String> listaArchivos = new ArrayList<>();
+        
         if (verificarArchivo(path)) {
             listaArchivos.add(path);
         } else if (verificarDirectorio(path)) {
             try {
-                Files.walk(Paths.get(path)).filter(a -> a.toFile().getName().endsWith(".csv"))
+                Files.walk(Paths.get(path))
+                        .filter(a -> a.toFile().getName().endsWith(".csv"))
                         .forEach(p -> listaArchivos.add(p.toString()));
 
                 listaArchivos.forEach(System.out::println);
 
             } catch (IOException ex) {
-                Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Lector.class.getName())
+                        .log(Level.SEVERE, null, ex);
             }
         }
         return listaArchivos;
@@ -64,7 +69,8 @@ public class Lector {
         List<List<String>> listado = new ArrayList<>();
 
         paths.forEach(p -> {
-            if (verificarArchivo(p)) {
+            
+          if (verificarArchivo(p)) {
                 try (Stream<String> lines = Files.lines(Paths.get(p))) {
                     lines.skip(saltarLinea ? 1 : 0)
                             .filter(l -> l.contains(separador))
@@ -78,14 +84,15 @@ public class Lector {
 
                             });
                 } catch (IOException ex) {
-                    Logger.getLogger(Lector.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Lector.class.getName())
+                            .log(Level.SEVERE, null, ex);
                 }
             }
         });
 
-        for (List e : listado) {
-            System.out.println(e);
-        }
+        listado.forEach((e) -> {
+          System.out.println(e);
+      });
 
         return listado;
     }
