@@ -10,54 +10,48 @@ package ues.edu.sv.tpi135_ingenieria.mantenimiento;
  * @author esperanza
  */
 public class Mantenimiento {
+
     //Aqui van todas las propiedades del mantenimiento que luego se van a convertir en JSON(?)
     //Todo lo saque de los pdf del aula virtual :v
-    private int id_mantenimiento;
-    private int id_responsable;
-    private String historico; //No se a que se refiere exactamente con el historico
-                              //Pero lo pongo de todos modos 
+    private String id_mantenimiento;
+    private String historico;
     private String numero_inventario;
-    private String numero_serie;
     private String marca;
+    private String numero_serie;
     private String modelo;
+    private String responsable;
     private String OS;
-    private boolean licencia;
+    private String licencia;
     private String version;
     private String observaciones;
-    
+
     //De aqui en adelante, codigo generado por netbeans
     //Constructo, getters y setters
+    public Mantenimiento() {
+    }
 
-    public Mantenimiento(){}
-    
-    public Mantenimiento(int id_mantenimiento, int id_responsable, String historico, String numero_inventario, String numero_serie, String marca, String modelo, String OS, boolean licencia, String version, String observaciones) {
+    public Mantenimiento(String id_mantenimiento, String historico, String numero_inventario,
+            String marca, String numero_serie, String modelo, String responsable, String OS,
+            String licencia, String version, String observaciones) {
         this.id_mantenimiento = id_mantenimiento;
-        this.id_responsable = id_responsable;
         this.historico = historico;
         this.numero_inventario = numero_inventario;
-        this.numero_serie = numero_serie;
         this.marca = marca;
+        this.numero_serie = numero_serie;
         this.modelo = modelo;
+        this.responsable = responsable;
         this.OS = OS;
         this.licencia = licencia;
         this.version = version;
         this.observaciones = observaciones;
     }
 
-    public int getId_mantenimiento() {
+    public String getId_mantenimiento() {
         return id_mantenimiento;
     }
 
-    public void setId_mantenimiento(int id_mantenimiento) {
+    public void setId_mantenimiento(String id_mantenimiento) {
         this.id_mantenimiento = id_mantenimiento;
-    }
-
-    public int getId_responsable() {
-        return id_responsable;
-    }
-
-    public void setId_responsable(int id_responsable) {
-        this.id_responsable = id_responsable;
     }
 
     public String getHistorico() {
@@ -76,20 +70,20 @@ public class Mantenimiento {
         this.numero_inventario = numero_inventario;
     }
 
-    public String getNumero_serie() {
-        return numero_serie;
-    }
-
-    public void setNumero_serie(String numero_serie) {
-        this.numero_serie = numero_serie;
-    }
-
     public String getMarca() {
         return marca;
     }
 
     public void setMarca(String marca) {
         this.marca = marca;
+    }
+
+    public String getNumero_serie() {
+        return numero_serie;
+    }
+
+    public void setNumero_serie(String numero_serie) {
+        this.numero_serie = numero_serie;
     }
 
     public String getModelo() {
@@ -100,6 +94,14 @@ public class Mantenimiento {
         this.modelo = modelo;
     }
 
+    public String getResponsable() {
+        return responsable;
+    }
+
+    public void setResponsable(String responsable) {
+        this.responsable = responsable;
+    }
+
     public String getOS() {
         return OS;
     }
@@ -108,11 +110,11 @@ public class Mantenimiento {
         this.OS = OS;
     }
 
-    public boolean isLicencia() {
+    public String isLicencia() {
         return licencia;
     }
 
-    public void setLicencia(boolean licencia) {
+    public void setLicencia(String licencia) {
         this.licencia = licencia;
     }
 
@@ -130,5 +132,6 @@ public class Mantenimiento {
 
     public void setObservaciones(String observaciones) {
         this.observaciones = observaciones;
-    }    
+    }
+
 }

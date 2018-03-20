@@ -33,25 +33,25 @@ public class LectorTest {
     @Before
     public void crearArchivosTemp() throws IOException {
         String texto = "id_mantenimiento,historico,n_inventario,marca,n_serie,modelo"
-                + ",responsable,sistema_operativo,version,observaciones\n"
+                + ",responsable,sistema_operativo,licencia,version,observaciones\n"
                 + "1,HP1,12040.3334.080.0017,Lenovo,MJVZLKF,ThinkCentre M82"
-                + ",Lic Rina de Zometa,Windows,7.0 Professional SP 64 bits,office pirata \n"
-                + "2,HP2,12040.3334.080.0008,Dell,551LHY,Vostron 220,Lic Rina de Zometa"
-                + ",Windows,7.0 Professional SP 64 bits,Office Original";
+                + ",Lic Rina de Zometa,Windows,si,7.0 Professional SP 64 bits,office pirata \n";
+              /*  + "2,HP2,12040.3334.080.0008,Dell,551LHY,Vostron 220,Lic Rina de Zometa"
+                + ",Windows,no,7.0 Professional SP 64 bits,Office Original"; */
 
-        String texto2 = "id_mantenimiento,historico,n_inventario,marca,n_serie,modelo"
-                + ",responsble,sistema_operativo,version,observaciones\n "
+       String texto2 = "id_mantenimiento,historico,n_inventario,marca,n_serie,modelo"
+                + ",responsble,sistema_operativo,licencia,version,observaciones\n "
                 + "1,HP2,12040.3334.080.0008,Dell,551LHY,Vostron 220,Lic Rina de Zometa"
-                + ",Windows,7.0 Professional SP 64 bits,Office Original";
+                + ",Windows,no,7.0 Professional SP 64 bits,Office Original";
 
         File tempfile = carpetaTemp.newFile("prueba.csv");
-        File tempfile2 = carpetaTemp.newFile("prueba2.csv");
+       File tempfile2 = carpetaTemp.newFile("prueba2.csv");
 
         try (FileWriter fw = new FileWriter(tempfile.getAbsolutePath());
                 PrintWriter pw = new PrintWriter(fw)) {
             pw.println(texto);
         }
-        try (FileWriter fw = new FileWriter(tempfile2.getAbsolutePath());
+       try (FileWriter fw = new FileWriter(tempfile2.getAbsolutePath());
                 PrintWriter pw = new PrintWriter(fw)) {
             pw.println(texto2);
         }
@@ -137,24 +137,24 @@ public class LectorTest {
         Lector instance = new Lector();
         List<List<String>> expResult = new ArrayList<>();
         List<String> parse = new ArrayList<>();
-        List<String> parse2 = new ArrayList<>();
+       // List<String> parse2 = new ArrayList<>();
         List<String> parse3 = new ArrayList<>();
 
         String[] lista = {"1", "HP1", "12040.3334.080.0017", "Lenovo", "MJVZLKF",
-            "ThinkCentre M82", "Lic Rina de Zometa", "Windows", "7.0 Professional SP 64 bits", "office pirata"};
-        String[] lista2 = {"2", "HP2", "12040.3334.080.0008", "Dell", "551LHY",
+            "ThinkCentre M82", "Lic Rina de Zometa", "Windows","si","7.0 Professional SP 64 bits", "office pirata"};
+      /*  String[] lista2 = {"2", "HP2", "12040.3334.080.0008", "Dell", "551LHY",
             "Vostron 220", "Lic Rina de Zometa",
-            "Windows", "7.0 Professional SP 64 bits", "Office Original"};
+            "Windows","no","7.0 Professional SP 64 bits", "Office Original"};*/
         String[] Lista3 = {"1", "HP2", "12040.3334.080.0008", "Dell", "551LHY",
             "Vostron 220", "Lic Rina de Zometa",
-            "Windows", "7.0 Professional SP 64 bits", "Office Original"};
+            "Windows","no", "7.0 Professional SP 64 bits", "Office Original"};
 
         parse.addAll(Arrays.asList(lista));
-        parse2.addAll(Arrays.asList(lista2));
+      //  parse2.addAll(Arrays.asList(lista2));
         parse3.addAll(Arrays.asList(Lista3));
         expResult.add(0, parse);
-        expResult.add(1, parse2);
-        expResult.add(2, parse3);
+      //  expResult.add(1, parse2);
+        expResult.add(1, parse3);
         List<String> path = instance.obtenerArchivos(paths);
         List<List<String>> result = instance.parser(path, saltarLinea, separador);
         assertEquals(expResult, result);
@@ -163,3 +163,4 @@ public class LectorTest {
     }
 
 }
+ 

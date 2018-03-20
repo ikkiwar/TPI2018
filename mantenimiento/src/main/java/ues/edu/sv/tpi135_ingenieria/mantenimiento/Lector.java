@@ -74,6 +74,19 @@ public class Lector {
                                 for (String string : separado) {
                                     lista.add(string.trim());
                                 }
+                                Mantenimiento mantenimiento = new Mantenimiento();
+                                mantenimiento.setId_mantenimiento(lista.get(0));
+                                mantenimiento.setHistorico(lista.get(1));
+                                mantenimiento.setNumero_inventario(lista.get(2));
+                                mantenimiento.setMarca(lista.get(3));
+                                mantenimiento.setNumero_serie(lista.get(4));
+                                mantenimiento.setModelo(lista.get(5));
+                                mantenimiento.setResponsable(lista.get(6));
+                                mantenimiento.setOS(lista.get(7));
+                                mantenimiento.setLicencia(lista.get(8));
+                                mantenimiento.setVersion(lista.get(9));
+                                mantenimiento.setObservaciones(lista.get(10));
+
                                 listado.add(lista);
 
                             });
