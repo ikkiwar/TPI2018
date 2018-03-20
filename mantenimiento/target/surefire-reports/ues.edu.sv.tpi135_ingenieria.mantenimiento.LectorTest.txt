@@ -1,12 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 0.488 sec <<< FAILURE! - in ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest
-testParser(ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest)  Time elapsed: 0.313 sec  <<< FAILURE!
-java.lang.AssertionError: expected:<[[1, HP1, 12040.3334.080.0017, Lenovo, MJVZLKF, ThinkCentre M82, Lic Rina de Zometa, Windows, 7.0 Professional SP 64 bits, office pirata], [2, HP2, 12040.3334.080.0008, Dell, 551LHY, Vostron 220, Lic Rina de Zometa, Windows, 7.0 Professional SP 64 bits, Office Original], [1, HP2, 12040.3334.080.0008, Dell, 551LHY, Vostron 220, Lic Rina de Zometa, Windows, 7.0 Professional SP 64 bits, Office Original]]> but was:<[[1, HP2, 12040.3334.080.0008, Dell, 551LHY, Vostron 220, Lic Rina de Zometa, Windows, 7.0 Professional SP 64 bits, Office Original], [1, HP1, 12040.3334.080.0017, Lenovo, MJVZLKF, ThinkCentre M82, Lic Rina de Zometa, Windows, 7.0 Professional SP 64 bits, office pirata], [2, HP2, 12040.3334.080.0008, Dell, 551LHY, Vostron 220, Lic Rina de Zometa, Windows, 7.0 Professional SP 64 bits, Office Original]]>
-	at ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest.testParser(LectorTest.java:160)
-
-testObtenerArchivos(ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest)  Time elapsed: 0.01 sec  <<< FAILURE!
-java.lang.AssertionError: expected:<[/tmp/junit4704911528988230280/prueba.csv, /tmp/junit4704911528988230280/prueba2.csv]> but was:<[/tmp/junit4704911528988230280/prueba2.csv, /tmp/junit4704911528988230280/prueba.csv]>
-	at ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest.testObtenerArchivos(LectorTest.java:124)
-
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.293 sec - in ues.edu.sv.tpi135_ingenieria.mantenimiento.LectorTest
