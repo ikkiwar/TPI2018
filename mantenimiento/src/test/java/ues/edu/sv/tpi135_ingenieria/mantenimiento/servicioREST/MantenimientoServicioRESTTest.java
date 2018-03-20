@@ -56,7 +56,7 @@ public class MantenimientoServicioRESTTest {
         clienteMock = Mockito.mock(Client.class);
         res = Mockito.mock(Response.class);
         Mockito.when(this.res.getStatus()).thenReturn(Status.CREATED.getStatusCode());
-        Mockito.when(this.res.getLocation()).thenReturn(new URI("http://localhost:8080/mantenimiento"));
+        Mockito.when(this.res.getLocation()).thenReturn(new URI("http://localhost:8080/ws/mantenimiento"));
         Builder bd = Mockito.mock(Builder.class);
         Mockito.when(bd.post(Matchers.any())).thenReturn(this.res);
 
@@ -84,7 +84,7 @@ public class MantenimientoServicioRESTTest {
             lista.get(1).add(mtn2.toString());
             //Se crea un objeto para el rest
             instance.cliente = this.clienteMock;
-            URI expResult = new URI("http://localhost:8080/mantenimiento");
+            URI expResult = new URI("http://localhost:8080/ws/mantenimiento");
             URI result = instance.postMantenimiento(lista);
             assertEquals(expResult, result);
         } catch (JSONException ex) {
